@@ -1,0 +1,16 @@
+﻿<Page
+    x:Class="BsodSimulator.RestartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BsodSimulator"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{x:Bind VM.SelectedColor.Brush}">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ProgressRing IsActive="True"  Height="50" Width="50" Foreground="White" ></ProgressRing>
+            <TextBlock FontSize="20" Margin="20" Foreground="White">Restarting Windows</TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>
