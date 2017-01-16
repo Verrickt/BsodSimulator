@@ -17,6 +17,15 @@ namespace BsodSimulator.ViewModel
 
         private MyColor selectedColor;
 
+        private string emoji;
+
+        public string Emoji
+        {
+            get { return emoji; }
+            set { SetPropertyValue(ref emoji, value); }
+        }
+
+
         private string description;
 
         public string Description
@@ -95,6 +104,8 @@ namespace BsodSimulator.ViewModel
         public MainPageVM()
         {
             MyColors = new List<MyColor>(MyColor.GetColors());
+
+            Emoji = ":(";
 
             Description = "Your PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you";
 

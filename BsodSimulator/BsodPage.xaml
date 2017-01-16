@@ -13,7 +13,7 @@
         </Style>
 
     </Page.Resources>
-    <Grid Background="{x:Bind VM.SelectedColor.Brush,Converter={StaticResource MakeCompilerHappy}}">
+    <Grid Background="{x:Bind VM.SelectedColor.Brush,Converter={StaticResource MakeCompilerHappy},Mode=OneWay}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Wide">
@@ -60,7 +60,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="1">
-            <TextBlock x:Name="textBlock4" Margin="10,15"  FontSize="200">:(</TextBlock>
+            <TextBlock x:Name="textBlock4" Margin="10,15"  FontSize="200" Text="{x:Bind VM.Emoji,Mode=OneWay}"></TextBlock>
             <TextBlock x:Name="textBlock1" Margin="10,15"
                    FontSize="35" TextWrapping="WrapWholeWords" Text="{x:Bind VM.Description}">
             </TextBlock>

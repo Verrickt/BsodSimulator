@@ -86,7 +86,7 @@
                 </GridView>
             </StackPanel>
             <StackPanel Grid.Row="1" Margin="10" Name="ValueStackPanel"  >
-
+                <TextBox Margin="10" TextWrapping="Wrap" Header="Emoji" x:Name="Emoji" Text="{x:Bind VM.Emoji,Mode=TwoWay}"></TextBox>
                 <TextBox Margin="10" TextWrapping="Wrap" Header="Descrption" x:Name="Description" Text="{x:Bind VM.Description,Mode=TwoWay}"></TextBox>
                 <TextBox Margin="10" TextWrapping="Wrap" Header="Url" x:Name="Url" Text="{x:Bind VM.Url,Mode=TwoWay}"></TextBox>
                 <TextBox Margin="10" TextWrapping="Wrap" Header="StopCode" x:Name="StopCode" Text="{x:Bind VM.StopCode,Mode=TwoWay}"></TextBox>

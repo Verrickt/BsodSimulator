@@ -68,7 +68,6 @@ namespace BsodSimulator
             {
                 ApplicationView.GetForCurrentView().ExitFullScreenMode();
                 App.EnableCursor();
-                ApplicationView.GetForCurrentView().ExitFullScreenMode();
                 base.OnNavigatedFrom(e);
             }
            
