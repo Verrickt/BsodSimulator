@@ -59,7 +59,10 @@ namespace BsodSimulator
                 return;
             }
             await VM.UpdateProgress();
-            this.Frame.Navigate(typeof(RestartPage), VM);
+            if (VM.RestartUponComplete)
+            {
+                this.Frame.Navigate(typeof(RestartPage), VM);
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
