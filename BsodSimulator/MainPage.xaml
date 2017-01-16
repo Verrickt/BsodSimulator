@@ -9,12 +9,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Narrow" >
                     <VisualState.Setters>
                         <Setter Target="ValueStackPanel.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="NoteTextBlock.Visibility" Value="Collapsed"></Setter>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}"></AdaptiveTrigger>
@@ -23,6 +24,7 @@
                 <VisualState x:Name="Normal"  >
                     <VisualState.Setters>
                         <Setter Target="ValueStackPanel.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="NoteTextBlock.Visibility" Value="Visible"></Setter>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}"></AdaptiveTrigger>
@@ -32,7 +34,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid>
-       
+
             <Grid.RowDefinitions>
                 <RowDefinition  Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -81,8 +83,8 @@
                         </Style>
                     </GridView.ItemContainerStyle>
 
-                    
-                    
+
+
                 </GridView>
             </StackPanel>
             <StackPanel Grid.Row="1" Margin="10" Name="ValueStackPanel"  >
@@ -92,17 +94,42 @@
                 <TextBox Margin="10" TextWrapping="Wrap" Header="StopCode" x:Name="StopCode" Text="{x:Bind VM.StopCode,Mode=TwoWay}"></TextBox>
 
                 <StackPanel>
-                    <CheckBox IsChecked="{x:Bind VM.DynamicPercentage,Mode=TwoWay}" Margin="10" Name="DynamicPercentageCheckBox">Dynamic Percentage?</CheckBox>
-                    <Slider  Margin="10" Header="Percent" 
+                    <CheckBox IsChecked="{x:Bind VM.DynamicPercentage,Mode=TwoWay}" Margin="10" Name="DynamicPercentageCheckBox">Auto-incremental progress</CheckBox>
+                    <Slider  Margin="10" Header="Progress" 
                              x:Name="Percent" Minimum="0" Maximum="100" 
                              IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value,Mode=OneWay,Converter={StaticResource BooleanNotConverter}}"
                              Value="{x:Bind VM.Percentage,Mode=TwoWay,Converter={StaticResource IntDoubleTwoWayConverter}}"></Slider>
                 </StackPanel>
-                <CheckBox Margin="10" IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value,Mode=OneWay}" IsChecked="{x:Bind VM.RestartUponComplete,Mode=TwoWay}">Restart once complete?</CheckBox>
+                <CheckBox Margin="10" IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value,Mode=OneWay}" IsChecked="{x:Bind VM.RestartUponComplete,Mode=TwoWay}">Show restart page upon complete</CheckBox>
                 <Button  Margin="10" Click="Button_Click"
                          BorderThickness="0"
                          Background="{x:Bind VM.SelectedColor.Brush,Mode=OneWay}" >Trigger bug check!</Button>
             </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="1" Margin="20" FontSize="25" 
+                       TextWrapping="WrapWholeWords" 
+                       Name="NoteTextBlock"
+                       >
+                <Run>Please note that the application 
+                will go </Run>
+                <Run Foreground="Red"> FULLSCREEN </Run>
+                
+                <Run>and make mouse cursor  </Run>
+                <Run Foreground="Red">INVISIBLE </Run>
+                <Run> once you click the button.</Run>
+               <Run>If you check the "Show restart page upon complete" checkbox ,after the progress
+               go to 100% you'll be shown a restart page which takes forever to complete.
+               </Run>
+                <Run>
+                    Please don't be shocked,since it's all
+               </Run>
+                <Run Foreground="Red">
+                    FAKE.
+               </Run>
+                <LineBreak>
+                    
+                </LineBreak><Run>You can always use titlebar and Task View(ALT+TAB) to exit the app</Run>
+
+            </TextBlock>
         </Grid>
     </ScrollViewer>
 </Page>
