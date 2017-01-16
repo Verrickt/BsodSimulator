@@ -114,6 +114,8 @@ namespace BsodSimulator.ViewModel
 
         public async Task UpdateProgress()
         {
+            int progress = Percentage;
+
             await Task.Delay(1000);//wait until navigation finishes
 
             Random r = new Random();
@@ -137,6 +139,8 @@ namespace BsodSimulator.ViewModel
                 }
                 
             }
+
+            Percentage = progress;
 
         }
        

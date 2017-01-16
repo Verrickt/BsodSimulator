@@ -31,8 +31,28 @@ namespace BsodSimulator
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+           
         }
 
+        public App app { get { return this; } }
+
+        private CoreCursor PointerCursor { get; set; }
+        private CoreWindow CoreWindow { get; set; }
+
+        public void EnableCursor()
+        {
+            this.CoreWindow.PointerCursor = PointerCursor;
+        }
+        public void DisableCursor()
+        {
+            this.CoreWindow.PointerCursor = null;
+        }
+
+        private void Init()
+        {
+            this.CoreWindow = CoreWindow.GetForCurrentThread();
+            this.PointerCursor = this.CoreWindow.PointerCursor;
+        }
         Frame rootFrame;
 
         /// <summary>
@@ -42,7 +62,7 @@ namespace BsodSimulator
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-             rootFrame = Window.Current.Content as Frame;
+            rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -58,7 +78,7 @@ namespace BsodSimulator
                     //TODO: Load state from previously suspended application
                 }
 
-               
+
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
@@ -85,12 +105,12 @@ namespace BsodSimulator
                 rootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
             };
 
-
+            Init();
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if(rootFrame.CanGoBack)
+            if (rootFrame.CanGoBack)
                 rootFrame.GoBack();
         }
 
@@ -116,7 +136,7 @@ namespace BsodSimulator
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
-            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested; ;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
 
 
             //TODO: Save application state and stop any background activity
