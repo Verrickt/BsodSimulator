@@ -136,7 +136,7 @@ namespace BsodSimulator.ViewModel
             }
             while (percent<100)
             {
-                if (r.Next()%3!=0)
+                if (r.Next()%2!=0)
                 {
                     int interval = r.Next(1000, 2000);
                     await Task.Delay(interval);
@@ -144,7 +144,7 @@ namespace BsodSimulator.ViewModel
                 else
                 {
                     int step = r.Next(5, 15);
-                    int interval = r.Next(1000, 2000);
+                    int interval = r.Next(500, 1000);
                     await Task.Delay(interval);
                     Percentage += step;
                 }
