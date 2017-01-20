@@ -8,7 +8,7 @@ Support for GSOD(green screen of death) which is available in build 15002 is inc
 
 Have fun 😋
 
-[![StoreLink](BsodSimulator/Assets/Store.PNG)](https://www.microsoft.com/store/apps/9nm26dl0v2b6)
+[![StoreLink](BsodSimulator/Assets/Store.png)](https://www.microsoft.com/store/apps/9nm26dl0v2b6)
 
 ---
 
