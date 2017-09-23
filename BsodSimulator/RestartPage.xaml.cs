@@ -24,21 +24,28 @@ namespace BsodSimulator
     /// </summary>
     public sealed partial class RestartPage : Page
     {
-        public MainPageVM VM { get; set; }
+        public MainViewModel VM { get; set; }
+
+        private readonly App _app;
 
         public RestartPage()
         {
             this.InitializeComponent();
+            _app = Application.Current as App;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            VM = e.Parameter as MainPageVM;
+            VM = e.Parameter as MainViewModel;
+
+            Frame.BackStack.RemoveAt(1);
+
             base.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            _app.ExitFullScreen();
             base.OnNavigatedFrom(e);
         }
     }

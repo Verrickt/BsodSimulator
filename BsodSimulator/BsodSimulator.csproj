@@ -11,8 +11,8 @@
     <AssemblyName>BsodSimulator</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -108,11 +108,13 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\MyColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Converters\InvertedVisibilityConverter.cs" />
     <Compile Include="RestartPage.xaml.cs">
       <DependentUpon>RestartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\MainPageVM.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
   </ItemGroup>
@@ -129,7 +131,6 @@
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
     <Content Include="Assets\QRCode.png" />
-    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
     <Content Include="Assets\SmallTile.scale-150.png" />

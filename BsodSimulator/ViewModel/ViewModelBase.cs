@@ -18,12 +18,13 @@ namespace BsodSimulator.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void SetPropertyValue<T>(ref T property,T value, [CallerMemberName]string propertyName = null)
+        protected void SetProperty<T>(ref T property,T value, [CallerMemberName]string propertyName = null,Action callback=null)
         {
             if (!EqualityComparer<T>.Default.Equals(property,value))
             {
                 property = value;
                 OnPropertyChanged(propertyName);
+                callback?.Invoke();
             }
         }
     }

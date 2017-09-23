@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
+using System.Threading;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -27,38 +28,48 @@ namespace BsodSimulator
     /// 
     public sealed partial class BsodPage : Page
     {
-        public ViewModel.MainPageVM VM { get; set; }
+        public ViewModel.MainViewModel VM { get; set; }
 
-        private App App { get; set; }
+        private readonly App _app;
+
+        CancellationTokenSource cts;
 
         public BsodPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            App = Application.Current as App;
+            _app = Application.Current as App;
         }
 
         protected override  void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.NavigationMode==NavigationMode.New)
             {
-                var vm = e.Parameter as MainPageVM;
+                var vm = e.Parameter as MainViewModel;
+                cts = new CancellationTokenSource();
                 VM = vm;
-                App.DisableCursor();
-                ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-                ListenForProgressChange();
+                _app.EnterFullScreen();
+                Bindings.Update();
+                ListenForProgressChange(cts.Token);
             }
             base.OnNavigatedTo(e);
 
         }
 
-        private async Task ListenForProgressChange()
+        private async Task ListenForProgressChange(CancellationToken t)
         {
             if (!VM.DynamicPercentage)
             {
                 return;
             }
-            await VM.UpdateProgress();
+            try
+            {
+                await VM.UpdateProgress(t);
+            }
+            catch (TaskCanceledException)
+            {
+                return;
+            }
             if (VM.RestartUponComplete)
             {
                 this.Frame.Navigate(typeof(RestartPage), VM);
@@ -69,8 +80,8 @@ namespace BsodSimulator
         {
             if (e.NavigationMode==NavigationMode.Back)
             {
-                ApplicationView.GetForCurrentView().ExitFullScreenMode();
-                App.EnableCursor();
+                _app.ExitFullScreen();
+                cts.Cancel();
                 base.OnNavigatedFrom(e);
             }
            

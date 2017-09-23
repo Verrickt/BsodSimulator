@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,22 +37,22 @@ namespace BsodSimulator
 
         public App app { get { return this; } }
 
-        private CoreCursor PointerCursor { get; set; }
-        private CoreWindow CoreWindow { get; set; }
+        private  CoreCursor _pointerCursor;
 
-        public void EnableCursor()
+        private  CoreWindow _coreWindow;
+       
+        public void EnterFullScreen()
         {
-            this.CoreWindow.PointerCursor = PointerCursor;
-        }
-        public void DisableCursor()
-        {
-            this.CoreWindow.PointerCursor = null;
+            ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+
+            _coreWindow.PointerCursor = null;
         }
 
-        private void Init()
+        public void ExitFullScreen()
         {
-            this.CoreWindow = CoreWindow.GetForCurrentThread();
-            this.PointerCursor = this.CoreWindow.PointerCursor;
+            ApplicationView.GetForCurrentView().ExitFullScreenMode();
+
+            _coreWindow.PointerCursor = _pointerCursor;
         }
         Frame rootFrame;
 
@@ -104,8 +105,8 @@ namespace BsodSimulator
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                 rootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
             };
-
-            Init();
+            _coreWindow = CoreWindow.GetForCurrentThread();
+            _pointerCursor = _coreWindow.PointerCursor;
         }
 
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
