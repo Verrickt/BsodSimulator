@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using System.Reflection;
 using Windows.UI.Xaml.Media;
+using System.Threading;
 
 namespace BsodSimulator.ViewModel
 {
@@ -130,35 +131,42 @@ namespace BsodSimulator.ViewModel
 
         }
 
-        public async Task UpdateProgress()
+        public async Task UpdateProgress(CancellationToken t)
         {
             int progress = Percentage;
-
-            await Task.Delay(1000);//wait until navigation finishes
-
-            Random r = new Random();
-            if (!DynamicPercentage)
+            try
             {
-                return;
+
+                await Task.Delay(1000, t);//wait until navigation finishes
+
+                Random r = new Random();
+                if (!DynamicPercentage)
+                {
+                    return;
+                }
+                while (percent < 100)
+                {
+                    if (r.Next() % 2 != 0)
+                    {
+                        int interval = r.Next(1000, 2000);
+                        await Task.Delay(interval, t);
+                    }
+                    else
+                    {
+                        int step = r.Next(5, 15);
+                        int interval = r.Next(500, 1000);
+                        await Task.Delay(interval, t);
+                        Percentage += step;
+                    }
+
+                }
             }
-            while (percent < 100)
+            catch (TaskCanceledException)
             {
-                if (r.Next() % 2 != 0)
-                {
-                    int interval = r.Next(1000, 2000);
-                    await Task.Delay(interval);
-                }
-                else
-                {
-                    int step = r.Next(5, 15);
-                    int interval = r.Next(500, 1000);
-                    await Task.Delay(interval);
-                    Percentage += step;
-                }
-
+                Percentage = progress;
+                throw;
             }
 
-            Percentage = progress;
 
         }
 

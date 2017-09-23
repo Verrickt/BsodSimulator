@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
+using System.Threading;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,6 +32,8 @@ namespace BsodSimulator
 
         private App App { get; set; }
 
+        CancellationTokenSource cts;
+
         public BsodPage()
         {
             this.InitializeComponent();
@@ -43,22 +46,31 @@ namespace BsodSimulator
             if (e.NavigationMode==NavigationMode.New)
             {
                 var vm = e.Parameter as MainPageVM;
+                cts = new CancellationTokenSource();
                 VM = vm;
                 App.DisableCursor();
                 ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
-                ListenForProgressChange();
+                Bindings.Update();
+                ListenForProgressChange(cts.Token);
             }
             base.OnNavigatedTo(e);
 
         }
 
-        private async Task ListenForProgressChange()
+        private async Task ListenForProgressChange(CancellationToken t)
         {
             if (!VM.DynamicPercentage)
             {
                 return;
             }
-            await VM.UpdateProgress();
+            try
+            {
+                await VM.UpdateProgress(t);
+            }
+            catch (TaskCanceledException)
+            {
+                return;
+            }
             if (VM.RestartUponComplete)
             {
                 this.Frame.Navigate(typeof(RestartPage), VM);
@@ -71,6 +83,7 @@ namespace BsodSimulator
             {
                 ApplicationView.GetForCurrentView().ExitFullScreenMode();
                 App.EnableCursor();
+                cts.Cancel();
                 base.OnNavigatedFrom(e);
             }
            
