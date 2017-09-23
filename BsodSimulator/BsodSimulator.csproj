@@ -100,6 +100,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="View\BsodPage.xaml.cs">
       <DependentUpon>BsodPage.xaml</DependentUpon>
     </Compile>

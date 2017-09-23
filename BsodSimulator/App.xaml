@@ -12,6 +12,6 @@
         <x:Double x:Key="WideMinWidth">1200</x:Double>
         <converters:GenericObjectConverter x:Key="MakeCompilerHappy"></converters:GenericObjectConverter>
         <converters:InvertedBoolean x:Key="BooleanNotConverter"></converters:InvertedBoolean>
-
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></converters:BoolToVisibilityConverter>
     </Application.Resources>
 </Application>
