@@ -153,23 +153,17 @@
                 TextWrapping="WrapWholeWords">
                 <Run>
                     Please note that the application
-                    will go
-                </Run>
-                <Run Foreground="Red">FULLSCREEN</Run>
+                    will go </Run>
+                <Run Foreground="Red"> FULLSCREEN </Run>
 
                 <Run>and make mouse cursor</Run>
-                <Run Foreground="Red">INVISIBLE</Run>
+                <Run Foreground="Red"> INVISIBLE </Run>
                 <Run>once you click the button.</Run>
                 <Run>
                     If you check the &quot;Show restart page upon complete&quot; checkbox ,after the progress
                     go to 100% you'll be shown a restart page which takes forever to complete.
                 </Run>
-                <Run>
-                    Please don't be shocked,since it's all
-                </Run>
-                <Run Foreground="Red">
-                    FAKE.
-                </Run>
+               
                 <LineBreak /><Run>You can always use titlebar and Task View(ALT+TAB) to exit the app</Run>
 
             </TextBlock>
