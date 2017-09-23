@@ -2,72 +2,69 @@
     x:Class="BsodSimulator.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BsodSimulator"
-    xmlns:vm="using:BsodSimulator.ViewModel"
-    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BsodSimulator"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:BsodSimulator.Model"
     mc:Ignorable="d">
 
     <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="Narrow" >
-                    <VisualState.Setters>
-                        <Setter Target="ValueStackPanel.(Grid.ColumnSpan)" Value="2"/>
-                        <Setter Target="NoteTextBlock.Visibility" Value="Collapsed"></Setter>
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}"></AdaptiveTrigger>
-                    </VisualState.StateTriggers>
-                </VisualState>
-                <VisualState x:Name="Normal"  >
-                    <VisualState.Setters>
-                        <Setter Target="ValueStackPanel.(Grid.ColumnSpan)" Value="1"/>
-                        <Setter Target="NoteTextBlock.Visibility" Value="Visible"></Setter>
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}"></AdaptiveTrigger>
-                    </VisualState.StateTriggers>
-                </VisualState>
-
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition  Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
 
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="2"  
-                      Margin="10">
+            <StackPanel
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Margin="10">
                 <TextBlock>Choose a mode</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Margin="10" IsChecked="{x:Bind VM.ClassicBSOD,Mode=TwoWay}" GroupName="color">BSOD(Classic)
+                    <RadioButton
+                        Margin="10"
+                        GroupName="color"
+                        IsChecked="{x:Bind VM.ClassicBSOD, Mode=TwoWay}">
+                        BSOD(Classic)
                     </RadioButton>
-                    <RadioButton Margin="10" IsChecked="{x:Bind VM.InsiderGSOD,Mode=TwoWay}" GroupName="color">GSOD(Insider)
+                    <RadioButton
+                        Margin="10"
+                        GroupName="color"
+                        IsChecked="{x:Bind VM.InsiderGSOD, Mode=TwoWay}">
+                        GSOD(Insider)
                     </RadioButton>
-                    <RadioButton Margin="10" Name="CustomColorRadioButton" GroupName="color">Custom
+                    <RadioButton
+                        Name="CustomColorRadioButton"
+                        Margin="10"
+                        GroupName="color">
+                        Custom
                     </RadioButton>
                 </StackPanel>
-                <GridView 
-                      SelectedItem="{x:Bind VM.SelectedColor,Mode=TwoWay,Converter={StaticResource MakeCompilerHappy}}"  
-                      Height="250" Grid.Row="0" Grid.ColumnSpan="2"  
-                      Margin="10" Header="Pick a color" x:Name="Colors" 
-                      ItemsSource="{x:Bind VM.MyColors}" Visibility="{x:Bind CustomColorRadioButton.IsChecked,Mode=OneWay}"
-                          >
+                <GridView
+                    x:Name="Colors"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Height="250"
+                    Margin="10"
+                    Header="Pick a color"
+                    ItemsSource="{x:Bind VM.MyColors}"
+                    SelectedItem="{x:Bind VM.SelectedColor, Mode=TwoWay, Converter={StaticResource MakeCompilerHappy}}"
+                    Visibility="{x:Bind CustomColorRadioButton.IsChecked, Mode=OneWay}">
                     <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="vm:MyColor">
+                        <DataTemplate x:DataType="model:MyColor">
                             <Border BorderBrush="Black" BorderThickness="2">
-                                <Rectangle Fill="{x:Bind Brush}" Width="30" Height="30">
+                                <Rectangle
+                                    Width="30"
+                                    Height="30"
+                                    Fill="{x:Bind Brush}">
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
-                                            <TextBlock Text="{x:Bind Name}"></TextBlock>
+                                            <TextBlock Text="{x:Bind Name}" />
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
 
@@ -78,8 +75,8 @@
                     </GridView.ItemTemplate>
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
-                            <Setter Property="Padding" Value="0"></Setter>
-                            <Setter Property="Margin" Value="0"></Setter>
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0" />
                         </Style>
                     </GridView.ItemContainerStyle>
 
@@ -87,49 +84,118 @@
 
                 </GridView>
             </StackPanel>
-            <StackPanel Grid.Row="1" Margin="10" Name="ValueStackPanel"  >
-                <TextBox Margin="10" TextWrapping="Wrap" Header="Emoji" x:Name="Emoji" Text="{x:Bind VM.Emoji,Mode=TwoWay}"></TextBox>
-                <TextBox Margin="10" TextWrapping="Wrap" Header="Descrption" x:Name="Description" Text="{x:Bind VM.Description,Mode=TwoWay}"></TextBox>
-                <TextBox Margin="10" TextWrapping="Wrap" Header="Url" x:Name="Url" Text="{x:Bind VM.Url,Mode=TwoWay}"></TextBox>
-                <TextBox Margin="10" TextWrapping="Wrap" Header="StopCode" x:Name="StopCode" Text="{x:Bind VM.StopCode,Mode=TwoWay}"></TextBox>
+            <StackPanel
+                Name="ValueStackPanel"
+                Grid.Row="1"
+                Margin="10">
+                <TextBox
+                    x:Name="Emoji"
+                    Margin="10"
+                    Header="Emoji"
+                    Text="{x:Bind VM.Emoji, Mode=TwoWay}"
+                    TextWrapping="Wrap" />
+                <TextBox
+                    x:Name="Description"
+                    Margin="10"
+                    Header="Descrption"
+                    Text="{x:Bind VM.Description, Mode=TwoWay}"
+                    TextWrapping="Wrap" />
+                <TextBox
+                    x:Name="Url"
+                    Margin="10"
+                    Header="Url"
+                    Text="{x:Bind VM.Url, Mode=TwoWay}"
+                    TextWrapping="Wrap" />
+                <TextBox
+                    x:Name="StopCode"
+                    Margin="10"
+                    Header="StopCode"
+                    Text="{x:Bind VM.StopCode, Mode=TwoWay}"
+                    TextWrapping="Wrap" />
 
                 <StackPanel>
-                    <CheckBox IsChecked="{x:Bind VM.DynamicPercentage,Mode=TwoWay}" Margin="10" Name="DynamicPercentageCheckBox">Auto-incremental progress</CheckBox>
-                    <Slider  Margin="10" Header="Progress" 
-                             x:Name="Percent" Minimum="0" Maximum="100" 
-                             IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value,Mode=OneWay,Converter={StaticResource BooleanNotConverter}}"
-                             Value="{x:Bind VM.Percentage,Mode=TwoWay,Converter={StaticResource IntDoubleTwoWayConverter}}"></Slider>
+                    <CheckBox
+                        Name="DynamicPercentageCheckBox"
+                        Margin="10"
+                        IsChecked="{x:Bind VM.DynamicPercentage, Mode=TwoWay}">
+                        Auto-incremental progress
+                    </CheckBox>
+                    <Slider
+                        x:Name="Percent"
+                        Margin="10"
+                        Header="Progress"
+                        IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value, Mode=OneWay, Converter={StaticResource BooleanNotConverter}}"
+                        Maximum="100"
+                        Minimum="0"
+                        Value="{x:Bind VM.Percentage, Mode=TwoWay, Converter={StaticResource IntDoubleTwoWayConverter}}" />
                 </StackPanel>
-                <CheckBox Margin="10" IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value,Mode=OneWay}" IsChecked="{x:Bind VM.RestartUponComplete,Mode=TwoWay}">Show restart page upon complete</CheckBox>
-                <Button  Margin="10" Click="Button_Click"
-                         BorderThickness="0"
-                         Background="{x:Bind VM.SelectedColor.Brush,Mode=OneWay}" >Trigger bug check!</Button>
+                <CheckBox
+                    Margin="10"
+                    IsChecked="{x:Bind VM.RestartUponComplete, Mode=TwoWay}"
+                    IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value, Mode=OneWay}">
+                    Show restart page upon complete
+                </CheckBox>
+                <Button
+                    Margin="10"
+                    Background="{x:Bind VM.SelectedColor.Brush, Mode=OneWay}"
+                    BorderThickness="0"
+                    Command="{x:Bind VM.GoToBSODPageCommand}"
+                    CommandParameter="{x:Bind Frame}">
+                    Trigger bug check!
+                </Button>
             </StackPanel>
-            <TextBlock Grid.Row="1" Grid.Column="1" Margin="20" FontSize="25" 
-                       TextWrapping="WrapWholeWords" 
-                       Name="NoteTextBlock"
-                       >
-                <Run>Please note that the application 
-                will go </Run>
-                <Run Foreground="Red"> FULLSCREEN </Run>
-                
-                <Run>and make mouse cursor  </Run>
-                <Run Foreground="Red">INVISIBLE </Run>
-                <Run> once you click the button.</Run>
-               <Run>If you check the "Show restart page upon complete" checkbox ,after the progress
-               go to 100% you'll be shown a restart page which takes forever to complete.
-               </Run>
+            <TextBlock
+                Name="NoteTextBlock"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="20"
+                FontSize="25"
+                TextWrapping="WrapWholeWords">
+                <Run>
+                    Please note that the application
+                    will go
+                </Run>
+                <Run Foreground="Red">FULLSCREEN</Run>
+
+                <Run>and make mouse cursor</Run>
+                <Run Foreground="Red">INVISIBLE</Run>
+                <Run>once you click the button.</Run>
+                <Run>
+                    If you check the &quot;Show restart page upon complete&quot; checkbox ,after the progress
+                    go to 100% you'll be shown a restart page which takes forever to complete.
+                </Run>
                 <Run>
                     Please don't be shocked,since it's all
-               </Run>
+                </Run>
                 <Run Foreground="Red">
                     FAKE.
-               </Run>
-                <LineBreak>
-                    
-                </LineBreak><Run>You can always use titlebar and Task View(ALT+TAB) to exit the app</Run>
+                </Run>
+                <LineBreak /><Run>You can always use titlebar and Task View(ALT+TAB) to exit the app</Run>
 
             </TextBlock>
         </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Narrow">
+                    <VisualState.Setters>
+                        <Setter Target="ValueStackPanel.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="NoteTextBlock.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                        <Setter Target="ValueStackPanel.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="NoteTextBlock.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </ScrollViewer>
 </Page>
