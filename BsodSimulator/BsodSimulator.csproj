@@ -114,6 +114,7 @@
     <Compile Include="RestartPage.xaml.cs">
       <DependentUpon>RestartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Service\QRCodeService.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\MainPageVM.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
