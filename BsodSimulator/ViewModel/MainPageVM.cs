@@ -11,9 +11,13 @@ using Windows.UI.Xaml.Media;
 
 namespace BsodSimulator.ViewModel
 {
-    public class MainPageVM:ViewModelBase
+    public class MainPageVM : ViewModelBase
     {
-        public MyColor SelectedColor { get { return selectedColor; } set { SetPropertyValue(ref selectedColor, value); } }
+        public MyColor SelectedColor
+        {
+            get { return selectedColor; }
+            set { SetPropertyValue(ref selectedColor, value); }
+        }
 
         private MyColor selectedColor;
 
@@ -31,7 +35,7 @@ namespace BsodSimulator.ViewModel
         public string Description
         {
             get { return description; }
-            set { description = value; }
+            set { SetPropertyValue(ref description, value); }
         }
 
         private int percent;
@@ -48,7 +52,7 @@ namespace BsodSimulator.ViewModel
         public bool DynamicPercentage
         {
             get { return dynamicPercentage; }
-            set { dynamicPercentage = value;if (value) Percentage = 0; }
+            set { dynamicPercentage = value; if (value) Percentage = 0; }
         }
 
 
@@ -57,7 +61,7 @@ namespace BsodSimulator.ViewModel
         public string Url
         {
             get { return url; }
-            set { url = value; }
+            set { SetPropertyValue(ref url, value); }
         }
 
 
@@ -66,7 +70,7 @@ namespace BsodSimulator.ViewModel
         public string StopCode
         {
             get { return stopCode; }
-            set { stopCode = value; }
+            set { SetPropertyValue(ref stopCode, value); }
         }
 
         public List<MyColor> MyColors;
@@ -76,7 +80,9 @@ namespace BsodSimulator.ViewModel
         public bool ClassicBSOD
         {
             get { return classicBSOD; }
-            set { SetPropertyValue(ref classicBSOD, value);
+            set
+            {
+                SetPropertyValue(ref classicBSOD, value);
                 if (classicBSOD)
                 {
                     SelectedColor = MyColor.GetColorByName("DodgerBlue");
@@ -89,7 +95,8 @@ namespace BsodSimulator.ViewModel
         public bool InsiderGSOD
         {
             get { return insiderGSOD; }
-            set {
+            set
+            {
                 SetPropertyValue(ref insiderGSOD, value);
                 if (InsiderGSOD)
                 {
@@ -120,7 +127,7 @@ namespace BsodSimulator.ViewModel
             DynamicPercentage = true;
 
             RestartUponComplete = true;
-            
+
         }
 
         public async Task UpdateProgress()
@@ -134,9 +141,9 @@ namespace BsodSimulator.ViewModel
             {
                 return;
             }
-            while (percent<100)
+            while (percent < 100)
             {
-                if (r.Next()%2!=0)
+                if (r.Next() % 2 != 0)
                 {
                     int interval = r.Next(1000, 2000);
                     await Task.Delay(interval);
@@ -148,13 +155,13 @@ namespace BsodSimulator.ViewModel
                     await Task.Delay(interval);
                     Percentage += step;
                 }
-                
+
             }
 
             Percentage = progress;
 
         }
-       
+
     }
 
     public class MyColor
@@ -163,7 +170,7 @@ namespace BsodSimulator.ViewModel
         public Brush Brush { get; set; }
 
         private static IReadOnlyList<MyColor> myColors;
-        
+
         public static MyColor GetColorByName(string name)
         {
             return myColors.Single(c => c.Name == name);
@@ -171,7 +178,7 @@ namespace BsodSimulator.ViewModel
 
         public static IReadOnlyList<MyColor> GetColors()
         {
-          if (myColors == null)
+            if (myColors == null)
             {
                 var propertyInfo = typeof(Colors).GetRuntimeProperties();
                 var solidBrushs = from info in propertyInfo
