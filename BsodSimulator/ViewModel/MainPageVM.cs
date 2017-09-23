@@ -12,6 +12,8 @@ using System.Threading;
 using BsodSimulator.Util;
 using Windows.UI.Xaml.Controls;
 using BsodSimulator.Model;
+using Windows.UI.Xaml.Media.Imaging;
+using BsodSimulator.Service;
 
 namespace BsodSimulator.ViewModel
 {
@@ -20,7 +22,7 @@ namespace BsodSimulator.ViewModel
         public MyColor SelectedColor
         {
             get { return selectedColor; }
-            set { SetProperty(ref selectedColor, value); }
+            set { SetProperty(ref selectedColor, value,callback:async () => Bitmap = await QRCodeService.GenerateQRCodeAsync(Url, SelectedColor)); }
         }
 
         private MyColor selectedColor;
@@ -42,6 +44,15 @@ namespace BsodSimulator.ViewModel
             set { SetProperty(ref description, value); }
         }
 
+        private WriteableBitmap _bitmap;
+
+        public WriteableBitmap Bitmap
+        {
+            get { return _bitmap; }
+            set { SetProperty(ref _bitmap, value); }
+        }
+
+
         private int percent;
 
         public int Percentage
@@ -56,7 +67,8 @@ namespace BsodSimulator.ViewModel
         public bool DynamicPercentage
         {
             get { return dynamicPercentage; }
-            set { SetProperty(ref dynamicPercentage, value, callback: () => Percentage = 0); }
+            set { SetProperty(ref dynamicPercentage, value,
+                callback: () => Percentage = 0); }
         }
 
 
@@ -65,7 +77,9 @@ namespace BsodSimulator.ViewModel
         public string Url
         {
             get { return url; }
-            set { SetProperty(ref url, value); }
+            set { SetProperty(ref url, value, callback: async() =>
+              Bitmap=await QRCodeService.GenerateQRCodeAsync(Url, SelectedColor)
+            ); }
         }
 
 
@@ -125,7 +139,6 @@ namespace BsodSimulator.ViewModel
 
             Percentage = 0;
 
-            Url = "http://windows.com/stopcode";
 
             StopCode = "KERNEL_MODE_HEAP_CORRUPTION";
 
@@ -137,6 +150,8 @@ namespace BsodSimulator.ViewModel
 
             GoToBSODPageCommand = new RelayCommand<Frame>(
                 f => f.Navigate(typeof(BsodPage), this));
+
+            Url = "http://windows.com/stopcode";
 
         }
         public async Task UpdateProgress(CancellationToken t)
@@ -171,10 +186,12 @@ namespace BsodSimulator.ViewModel
             }
             catch (TaskCanceledException)
             {
-                Percentage = progress;
                 throw;
             }
-
+            finally
+            {
+                Percentage = progress;
+            }
 
         }
 
