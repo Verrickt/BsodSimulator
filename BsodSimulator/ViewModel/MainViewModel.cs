@@ -21,27 +21,27 @@ namespace BsodSimulator.ViewModel
     {
         public MyColor SelectedColor
         {
-            get { return selectedColor; }
-            set { SetProperty(ref selectedColor, value,callback:async () => Bitmap = await QRCodeService.GenerateQRCodeAsync(Url, SelectedColor)); }
+            get { return _selectedColor; }
+            set { SetProperty(ref _selectedColor, value,callback:async () => Bitmap = await QRCodeService.GenerateQRCodeAsync(Url, SelectedColor)); }
         }
 
-        private MyColor selectedColor;
+        private MyColor _selectedColor;
 
-        private string emoji;
+        private string _emoji;
 
         public string Emoji
         {
-            get { return emoji; }
-            set { SetProperty(ref emoji, value); }
+            get { return _emoji; }
+            set { SetProperty(ref _emoji, value); }
         }
 
 
-        private string description;
+        private string _description;
 
         public string Description
         {
-            get { return description; }
-            set { SetProperty(ref description, value); }
+            get { return _description; }
+            set { SetProperty(ref _description, value); }
         }
 
         private WriteableBitmap _bitmap;
@@ -53,73 +53,80 @@ namespace BsodSimulator.ViewModel
         }
 
 
-        private int percent;
+        private int _percent;
 
         public int Percentage
         {
-            get { return percent; }
-            set { SetProperty(ref percent, value); }
+            get { return _percent; }
+            set { SetProperty(ref _percent, value); }
         }
 
 
-        private bool dynamicPercentage;
+        private bool _dynamicPercentage;
 
         public bool DynamicPercentage
         {
-            get { return dynamicPercentage; }
-            set { SetProperty(ref dynamicPercentage, value,
+            get { return _dynamicPercentage; }
+            set { SetProperty(ref _dynamicPercentage, value,
                 callback: () => Percentage = 0); }
         }
 
 
-        private string url;
+        private string _url;
 
         public string Url
         {
-            get { return url; }
-            set { SetProperty(ref url, value, callback: async() =>
+            get { return _url; }
+            set { SetProperty(ref _url, value, callback: async() =>
               Bitmap=await QRCodeService.GenerateQRCodeAsync(Url, SelectedColor)
             ); }
         }
 
 
-        private string stopCode;
+        private string _stopCode;
 
         public string StopCode
         {
-            get { return stopCode; }
-            set { SetProperty(ref stopCode, value); }
+            get { return _stopCode; }
+            set { SetProperty(ref _stopCode, value); }
         }
 
         public List<MyColor> MyColors;
 
-        private bool classicBSOD;
+        private bool _classicBSOD;
 
         public bool ClassicBSOD
         {
-            get { return classicBSOD; }
+            get { return _classicBSOD; }
             set
             {
-                SetProperty(ref classicBSOD, value);
-                if (classicBSOD)
-                {
-                    SelectedColor = MyColor.GetColorByName("DodgerBlue");
-                }
+                SetProperty(ref _classicBSOD, value,callback:()=> 
+                    {
+                        if (_classicBSOD)
+                        {
+                            SelectedColor = MyColor.GetColorByName("DodgerBlue");
+                        }
+                    });
+               
             }
         }
 
-        private bool insiderGSOD;
+        private bool _insiderGSOD;
 
         public bool InsiderGSOD
         {
-            get { return insiderGSOD; }
+            get { return _insiderGSOD; }
             set
             {
-                SetProperty(ref insiderGSOD, value);
-                if (InsiderGSOD)
+                SetProperty(ref _insiderGSOD, value, callback: () =>
                 {
-                    SelectedColor = MyColor.GetColorByName("LimeGreen");
+                    if (InsiderGSOD)
+                    {
+                        SelectedColor = MyColor.GetColorByName("LimeGreen");
+                    }
                 }
+                    );
+               
             }
         }
 
@@ -167,7 +174,7 @@ namespace BsodSimulator.ViewModel
                 {
                     return;
                 }
-                while (percent < 100)
+                while (_percent < 100)
                 {
                     if (r.Next() % 2 != 0)
                     {
