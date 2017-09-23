@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="52380.BSODSimulator" Publisher="CN=F4B7D18A-75E2-4557-BF82-DCB879281C17" Version="1.1.0.0" />
+  <Identity Name="52380.BSODSimulator" Publisher="CN=F4B7D18A-75E2-4557-BF82-DCB879281C17" Version="1.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="280ff9e6-596f-46c5-9609-cfc2788f74fc" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>BSOD Simulator</DisplayName>

@@ -29,13 +29,13 @@
                     <RadioButton
                         Margin="10"
                         GroupName="color"
-                        IsChecked="{x:Bind VM.ClassicBSOD, Mode=TwoWay}">
+                        IsChecked="{x:Bind VM.ClassicBSOD, Mode=TwoWay, Converter={StaticResource MakeCompilerHappy}}">
                         BSOD(Classic)
                     </RadioButton>
                     <RadioButton
                         Margin="10"
                         GroupName="color"
-                        IsChecked="{x:Bind VM.InsiderGSOD, Mode=TwoWay}">
+                        IsChecked="{x:Bind VM.InsiderGSOD, Mode=TwoWay, Converter={StaticResource MakeCompilerHappy}}">
                         GSOD(Insider)
                     </RadioButton>
                     <RadioButton
@@ -54,7 +54,7 @@
                     Header="Pick a color"
                     ItemsSource="{x:Bind VM.MyColors}"
                     SelectedItem="{x:Bind VM.SelectedColor, Mode=TwoWay, Converter={StaticResource MakeCompilerHappy}}"
-                    Visibility="{x:Bind CustomColorRadioButton.IsChecked, Mode=OneWay}">
+                    Visibility="{x:Bind CustomColorRadioButton.IsChecked, Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="model:MyColor">
                             <Border BorderBrush="Black" BorderThickness="2">
@@ -117,7 +117,7 @@
                     <CheckBox
                         Name="DynamicPercentageCheckBox"
                         Margin="10"
-                        IsChecked="{x:Bind VM.DynamicPercentage, Mode=TwoWay}">
+                        IsChecked="{x:Bind VM.DynamicPercentage, Mode=TwoWay,Converter={StaticResource MakeCompilerHappy}}">
                         Auto-incremental progress
                     </CheckBox>
                     <Slider
@@ -131,7 +131,7 @@
                 </StackPanel>
                 <CheckBox
                     Margin="10"
-                    IsChecked="{x:Bind VM.RestartUponComplete, Mode=TwoWay}"
+                    IsChecked="{x:Bind VM.RestartUponComplete, Mode=TwoWay, Converter={StaticResource MakeCompilerHappy}}"
                     IsEnabled="{x:Bind DynamicPercentageCheckBox.IsChecked.Value, Mode=OneWay}">
                     Show restart page upon complete
                 </CheckBox>
@@ -153,23 +153,17 @@
                 TextWrapping="WrapWholeWords">
                 <Run>
                     Please note that the application
-                    will go
-                </Run>
-                <Run Foreground="Red">FULLSCREEN</Run>
+                    will go </Run>
+                <Run Foreground="Red"> FULLSCREEN </Run>
 
                 <Run>and make mouse cursor</Run>
-                <Run Foreground="Red">INVISIBLE</Run>
+                <Run Foreground="Red"> INVISIBLE </Run>
                 <Run>once you click the button.</Run>
                 <Run>
                     If you check the &quot;Show restart page upon complete&quot; checkbox ,after the progress
                     go to 100% you'll be shown a restart page which takes forever to complete.
                 </Run>
-                <Run>
-                    Please don't be shocked,since it's all
-                </Run>
-                <Run Foreground="Red">
-                    FAKE.
-                </Run>
+               
                 <LineBreak /><Run>You can always use titlebar and Task View(ALT+TAB) to exit the app</Run>
 
             </TextBlock>
