@@ -26,19 +26,26 @@ namespace BsodSimulator
     {
         public MainPageVM VM { get; set; }
 
+        private readonly App _app;
+
         public RestartPage()
         {
             this.InitializeComponent();
+            _app = Application.Current as App;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             VM = e.Parameter as MainPageVM;
+
+            Frame.BackStack.RemoveAt(1);
+
             base.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            _app.ExitFullScreen();
             base.OnNavigatedFrom(e);
         }
     }

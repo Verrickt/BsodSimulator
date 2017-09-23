@@ -30,7 +30,7 @@ namespace BsodSimulator
     {
         public ViewModel.MainPageVM VM { get; set; }
 
-        private App App { get; set; }
+        private readonly App _app;
 
         CancellationTokenSource cts;
 
@@ -38,7 +38,7 @@ namespace BsodSimulator
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            App = Application.Current as App;
+            _app = Application.Current as App;
         }
 
         protected override  void OnNavigatedTo(NavigationEventArgs e)
@@ -48,8 +48,7 @@ namespace BsodSimulator
                 var vm = e.Parameter as MainPageVM;
                 cts = new CancellationTokenSource();
                 VM = vm;
-                App.DisableCursor();
-                ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+                _app.EnterFullScreen();
                 Bindings.Update();
                 ListenForProgressChange(cts.Token);
             }
@@ -81,8 +80,7 @@ namespace BsodSimulator
         {
             if (e.NavigationMode==NavigationMode.Back)
             {
-                ApplicationView.GetForCurrentView().ExitFullScreenMode();
-                App.EnableCursor();
+                _app.ExitFullScreen();
                 cts.Cancel();
                 base.OnNavigatedFrom(e);
             }
