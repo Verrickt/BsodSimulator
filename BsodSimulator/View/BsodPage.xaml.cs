@@ -50,7 +50,10 @@ namespace BsodSimulator.View
                 VM = vm;
                 _app.EnterFullScreen();
                 Bindings.Update();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                //fire and forgot
                 ListenForProgressChange(cts.Token);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
             base.OnNavigatedTo(e);
 
