@@ -15,7 +15,7 @@ using BsodSimulator.Model;
 
 namespace BsodSimulator.ViewModel
 {
-    public class MainPageVM : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         public MyColor SelectedColor
         {
@@ -115,7 +115,7 @@ namespace BsodSimulator.ViewModel
         public RelayCommand<Frame> GoToBSODPageCommand { get; set; }
 
 
-        public MainPageVM()
+        public MainViewModel()
         {
             MyColors = new List<MyColor>(MyColor.GetColors());
 

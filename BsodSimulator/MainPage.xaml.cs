@@ -24,13 +24,13 @@ namespace BsodSimulator
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public MainPageVM VM{ get; set; }
+        public MainViewModel VM{ get; set; }
 
         public MainPage()
         {
             this.NavigationCacheMode = NavigationCacheMode.Required;
             this.InitializeComponent();
-            VM = new MainPageVM();
+            VM = new MainViewModel();
         }
 
         

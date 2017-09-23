@@ -28,7 +28,7 @@ namespace BsodSimulator
     /// 
     public sealed partial class BsodPage : Page
     {
-        public ViewModel.MainPageVM VM { get; set; }
+        public ViewModel.MainViewModel VM { get; set; }
 
         private readonly App _app;
 
@@ -45,7 +45,7 @@ namespace BsodSimulator
         {
             if (e.NavigationMode==NavigationMode.New)
             {
-                var vm = e.Parameter as MainPageVM;
+                var vm = e.Parameter as MainViewModel;
                 cts = new CancellationTokenSource();
                 VM = vm;
                 _app.EnterFullScreen();

@@ -24,7 +24,7 @@ namespace BsodSimulator
     /// </summary>
     public sealed partial class RestartPage : Page
     {
-        public MainPageVM VM { get; set; }
+        public MainViewModel VM { get; set; }
 
         private readonly App _app;
 
@@ -36,7 +36,7 @@ namespace BsodSimulator
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            VM = e.Parameter as MainPageVM;
+            VM = e.Parameter as MainViewModel;
 
             Frame.BackStack.RemoveAt(1);
 
