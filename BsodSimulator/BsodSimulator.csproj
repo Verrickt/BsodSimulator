@@ -100,7 +100,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BsodPage.xaml.cs">
+    <Compile Include="View\BsodPage.xaml.cs">
       <DependentUpon>BsodPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\Int32ToDoubleConverter.cs" />
@@ -111,12 +111,12 @@
     <Compile Include="Model\MyColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Converters\InvertedVisibilityConverter.cs" />
-    <Compile Include="RestartPage.xaml.cs">
+    <Compile Include="View\RestartPage.xaml.cs">
       <DependentUpon>RestartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service\QRCodeService.cs" />
     <Compile Include="Util\RelayCommand.cs" />
-    <Compile Include="ViewModel\MainPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +179,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BsodPage.xaml">
+    <Page Include="View\BsodPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,7 +187,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="RestartPage.xaml">
+    <Page Include="View\RestartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
