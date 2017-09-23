@@ -9,6 +9,9 @@ using Windows.UI;
 using System.Reflection;
 using Windows.UI.Xaml.Media;
 using System.Threading;
+using BsodSimulator.Util;
+using Windows.UI.Xaml.Controls;
+using BsodSimulator.Model;
 
 namespace BsodSimulator.ViewModel
 {
@@ -17,7 +20,7 @@ namespace BsodSimulator.ViewModel
         public MyColor SelectedColor
         {
             get { return selectedColor; }
-            set { SetPropertyValue(ref selectedColor, value); }
+            set { SetProperty(ref selectedColor, value); }
         }
 
         private MyColor selectedColor;
@@ -27,7 +30,7 @@ namespace BsodSimulator.ViewModel
         public string Emoji
         {
             get { return emoji; }
-            set { SetPropertyValue(ref emoji, value); }
+            set { SetProperty(ref emoji, value); }
         }
 
 
@@ -36,7 +39,7 @@ namespace BsodSimulator.ViewModel
         public string Description
         {
             get { return description; }
-            set { SetPropertyValue(ref description, value); }
+            set { SetProperty(ref description, value); }
         }
 
         private int percent;
@@ -44,7 +47,7 @@ namespace BsodSimulator.ViewModel
         public int Percentage
         {
             get { return percent; }
-            set { SetPropertyValue(ref percent, value); }
+            set { SetProperty(ref percent, value); }
         }
 
 
@@ -53,7 +56,7 @@ namespace BsodSimulator.ViewModel
         public bool DynamicPercentage
         {
             get { return dynamicPercentage; }
-            set { dynamicPercentage = value; if (value) Percentage = 0; }
+            set { SetProperty(ref dynamicPercentage, value, callback: () => Percentage = 0); }
         }
 
 
@@ -62,7 +65,7 @@ namespace BsodSimulator.ViewModel
         public string Url
         {
             get { return url; }
-            set { SetPropertyValue(ref url, value); }
+            set { SetProperty(ref url, value); }
         }
 
 
@@ -71,7 +74,7 @@ namespace BsodSimulator.ViewModel
         public string StopCode
         {
             get { return stopCode; }
-            set { SetPropertyValue(ref stopCode, value); }
+            set { SetProperty(ref stopCode, value); }
         }
 
         public List<MyColor> MyColors;
@@ -83,7 +86,7 @@ namespace BsodSimulator.ViewModel
             get { return classicBSOD; }
             set
             {
-                SetPropertyValue(ref classicBSOD, value);
+                SetProperty(ref classicBSOD, value);
                 if (classicBSOD)
                 {
                     SelectedColor = MyColor.GetColorByName("DodgerBlue");
@@ -98,7 +101,7 @@ namespace BsodSimulator.ViewModel
             get { return insiderGSOD; }
             set
             {
-                SetPropertyValue(ref insiderGSOD, value);
+                SetProperty(ref insiderGSOD, value);
                 if (InsiderGSOD)
                 {
                     SelectedColor = MyColor.GetColorByName("LimeGreen");
@@ -107,6 +110,9 @@ namespace BsodSimulator.ViewModel
         }
 
         public bool RestartUponComplete { get; set; }
+
+
+        public RelayCommand<Frame> GoToBSODPageCommand { get; set; }
 
 
         public MainPageVM()
@@ -129,8 +135,10 @@ namespace BsodSimulator.ViewModel
 
             RestartUponComplete = true;
 
-        }
+            GoToBSODPageCommand = new RelayCommand<Frame>(
+                f => f.Navigate(typeof(BsodPage), this));
 
+        }
         public async Task UpdateProgress(CancellationToken t)
         {
             int progress = Percentage;
@@ -172,33 +180,5 @@ namespace BsodSimulator.ViewModel
 
     }
 
-    public class MyColor
-    {
-        public string Name { get; set; }
-        public Brush Brush { get; set; }
-
-        private static IReadOnlyList<MyColor> myColors;
-
-        public static MyColor GetColorByName(string name)
-        {
-            return myColors.Single(c => c.Name == name);
-        }
-
-        public static IReadOnlyList<MyColor> GetColors()
-        {
-            if (myColors == null)
-            {
-                var propertyInfo = typeof(Colors).GetRuntimeProperties();
-                var solidBrushs = from info in propertyInfo
-                                  select new MyColor
-                                  {
-                                      Name = info.Name,
-                                      Brush = new SolidColorBrush(
-                                      (Color)info.GetValue(null))
-                                  };
-                myColors = solidBrushs.ToList();
-            }
-            return myColors;
-        }
-    }
+  
 }

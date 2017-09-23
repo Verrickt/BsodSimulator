@@ -108,6 +108,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\MyColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Converters\InvertedVisibilityConverter.cs" />
     <Compile Include="RestartPage.xaml.cs">
