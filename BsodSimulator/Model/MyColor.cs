@@ -11,8 +11,12 @@ namespace BsodSimulator.Model
 {
     public class MyColor
     {
-        public string Name { get; set; }
-        public Brush Brush { get; set; }
+        public string Name { get; private set; }
+        public Brush Brush { get; private set; }
+        public byte R { get;private set; }
+        public byte B { get; private set; }
+        public byte G { get; private set; }
+        public byte A { get; private set; }
 
         private static IReadOnlyList<MyColor> myColors;
 
@@ -27,11 +31,15 @@ namespace BsodSimulator.Model
             {
                 var propertyInfo = typeof(Colors).GetRuntimeProperties();
                 var solidBrushs = from info in propertyInfo
+                                  let color = (Color)info.GetValue(null)
                                   select new MyColor
                                   {
                                       Name = info.Name,
-                                      Brush = new SolidColorBrush(
-                                      (Color)info.GetValue(null))
+                                      Brush = new SolidColorBrush(color),
+                                      R = color.R,
+                                      G = color.G,
+                                      B = color.B,
+                                      A = color.A
                                   };
                 myColors = solidBrushs.ToList();
             }
