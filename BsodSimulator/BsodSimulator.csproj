@@ -104,7 +104,7 @@
       <DependentUpon>BsodPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\Int32ToDoubleConverter.cs" />
-    <Compile Include="Converters\MakeCompilerHappyConverter.cs" />
+    <Compile Include="Converters\GenericObjectConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

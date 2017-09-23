@@ -10,7 +10,7 @@
         <x:Double x:Key="NarrowMinWidth">0</x:Double>
         <x:Double x:Key="NormalMinWidth">521</x:Double>
         <x:Double x:Key="WideMinWidth">1200</x:Double>
-        <converters:MakeCompilerHappyConverter x:Key="MakeCompilerHappy"></converters:MakeCompilerHappyConverter>
+        <converters:GenericObjectConverter x:Key="MakeCompilerHappy"></converters:GenericObjectConverter>
         <converters:InvertedBoolean x:Key="BooleanNotConverter"></converters:InvertedBoolean>
 
     </Application.Resources>
